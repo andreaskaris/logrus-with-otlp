@@ -24,3 +24,6 @@ spec:
         - "otel-collector.openshift-logging.svc.cluster.local:4317"
         image: quay.io/akaris/logrus-with-otlp:latest
         name: logrus-with-otlp
+        env:
+        - name: "OTEL_SERVICE_NAME"
+          value: "logrus-with-otlp"
