@@ -21,8 +21,8 @@ spec:
         - /usr/local/bin/logrus-with-otlp
         image: quay.io/akaris/logrus-with-otlp:latest
         name: logrus-with-otlp
-      env:
-      - name: OTEL_SERVICE_NAME
-        value: "logrus-with-otlp"
-      - name: OTEL_EXPORTER_OTLP_ENDPOINT
-        value: "http://otel-collector.openshift-logging.svc.cluster.local:4317"
+        env:
+        - name: OTEL_SERVICE_NAME
+          value: "logrus-with-otlp"
+        - name: OTEL_EXPORTER_OTLP_ENDPOINT
+          value: "http://otel-collector.openshift-logging.svc.cluster.local:4317"

@@ -15,3 +15,7 @@ container:
 .PHONY: container-push
 container-push:
 	podman push $(IMAGE)
+
+.PHONY: deploy
+deploy:
+	kubectl apply -f deployment.yaml
