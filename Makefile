@@ -11,3 +11,7 @@ build:
 .PHONY: container
 container:
 	podman build -t $(IMAGE) .
+
+.PHONY: container-push
+container-push:
+	podman push $(IMAGE)
