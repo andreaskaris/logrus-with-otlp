@@ -26,8 +26,8 @@ go.opentelemetry.io/contrib/bridges/otellogrus v0.4.0 h1:1414bkqE9g7BjrIwWZA2cDh
 go.opentelemetry.io/contrib/bridges/otellogrus v0.4.0/go.mod h1:eFAvhDXNtm3eecKWAxwnnX3gKCo9dKMFbwG4Puspwxs=
 go.opentelemetry.io/otel v1.29.0 h1:PdomN/Al4q/lN6iBJEN3AwPvUiHPMlt93c8bqTG5Llw=
 go.opentelemetry.io/otel v1.29.0/go.mod h1:N/WtXPs1CNCUEx+Agz5uouwCba+i+bJGFicT8SR4NP8=
-go.opentelemetry.io/otel/exporters/otlp/otlplog/otlploghttp v0.5.0 h1:4d++HQ+Ihdl+53zSjtsCUFDmNMju2FC9qFkUlTxPLqo=
-go.opentelemetry.io/otel/exporters/otlp/otlplog/otlploghttp v0.5.0/go.mod h1:mQX5dTO3Mh5ZF7bPKDkt5c/7C41u/SiDr9XgTpzXXn8=
+go.opentelemetry.io/otel/exporters/otlp/otlplog/otlploggrpc v0.5.0 h1:iWyFL+atC9S1e6MFDLNUZieyKTmsrvsDzuozUDbFg8E=
+go.opentelemetry.io/otel/exporters/otlp/otlplog/otlploggrpc v0.5.0/go.mod h1:0Ur7rPCJmkHksYcBywsFXnKBG3pqGl4TGltZ+T3qhSA=
 go.opentelemetry.io/otel/log v0.5.0 h1:x1Pr6Y3gnXgl1iFBwtGy1W/mnzENoK0w0ZoaeOI3i30=
 go.opentelemetry.io/otel/log v0.5.0/go.mod h1:NU/ozXeGuOR5/mjCRXYbTC00NFJ3NYuraV/7O78F0rE=
 go.opentelemetry.io/otel/metric v1.29.0 h1:vPf/HFWTNkPu1aYeIsc98l4ktOQaL6LeSoeV2g+8YLc=

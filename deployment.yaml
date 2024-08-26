@@ -19,10 +19,8 @@ spec:
       containers:
       - command:
         - /usr/local/bin/logrus-with-otlp
+        - "-otlp-insecure"
+        - "-otlp-endpoint"
+        - "otel-collector.openshift-logging.svc.cluster.local:4317"
         image: quay.io/akaris/logrus-with-otlp:latest
         name: logrus-with-otlp
-        env:
-        - name: OTEL_SERVICE_NAME
-          value: "logrus-with-otlp"
-        - name: OTEL_EXPORTER_OTLP_ENDPOINT
-          value: "http://otel-collector.openshift-logging.svc.cluster.local:4317"

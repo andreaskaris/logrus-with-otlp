@@ -4,38 +4,29 @@ import (
 	"context"
 	"flag"
 	"fmt"
-	"os"
 	"time"
 
 	"github.com/sirupsen/logrus"
 	"go.opentelemetry.io/contrib/bridges/otellogrus"
-	"go.opentelemetry.io/otel/exporters/otlp/otlplog/otlploghttp"
+	"go.opentelemetry.io/otel/exporters/otlp/otlplog/otlploggrpc"
 	"go.opentelemetry.io/otel/log/global"
 	"go.opentelemetry.io/otel/sdk/log"
 )
 
 var (
-	interval = flag.Int("interval", 1, "Interval between log messages in seconds")
-	// otlpEndpoint = flag.String("otlp-endpoint", "", "URL of OTLP endpoint - leave empty for logging to STDOUT")
-	// otlpInsecure = flag.Bool("otlp-insecure", false, "Specify if OTLP connection shall be insecure")
+	interval     = flag.Int("interval", 1, "Interval between log messages in seconds")
+	otlpEndpoint = flag.String("otlp-endpoint", "", "URL of OTLP endpoint - leave empty for logging to STDOUT")
+	otlpInsecure = flag.Bool("otlp-insecure", false, "Specify if OTLP connection shall be insecure")
 )
 
 func main() {
-	otelServiceName, _ := os.LookupEnv("OTEL_SERVICE_NAME")
-	otelExporterOTLPEndpoint, _ := os.LookupEnv("OTEL_EXPORTER_OTLP_ENDPOINT")
-	otelExporterOTLPHeaders, _ := os.LookupEnv("OTEL_EXPORTER_OTLP_HEADERS")
-	fmt.Println("Setting up logging with: ", interval, otelServiceName, otelExporterOTLPEndpoint, otelExporterOTLPHeaders)
 	flag.Parse()
-
-	if otelExporterOTLPEndpoint != "" && otelServiceName == "" {
-		panic(fmt.Errorf("OTEL_SERVICE_NAME must be set when OTEL_EXPORTER_OTLP_ENDPOINT is set"))
-	}
-
-	if otelServiceName != "" {
+	fmt.Println("Starting application with: ", *interval, *otlpEndpoint, *otlpInsecure, "gRPC")
+	if *otlpEndpoint != "" {
 		ctx := context.Background()
 		// Create a logger provider.
 		// You can pass this instance directly when creating bridges.
-		loggerProvider, err := newLoggerProvider(ctx)
+		loggerProvider, err := newLoggerProvider(ctx, *otlpEndpoint, *otlpInsecure)
 		if err != nil {
 			panic(err)
 		}
@@ -63,8 +54,18 @@ func main() {
 	}
 }
 
-func newLoggerProvider(ctx context.Context) (*log.LoggerProvider, error) {
-	exporter, err := otlploghttp.New(ctx)
+func newLoggerProvider(ctx context.Context, otlpEndpoint string, otlpInsecure bool) (*log.LoggerProvider, error) {
+	grpcExpOpt := []otlploggrpc.Option{
+		otlploggrpc.WithEndpoint(otlpEndpoint),
+	}
+
+	if otlpInsecure {
+		grpcExpOpt = append(grpcExpOpt, otlploggrpc.WithInsecure())
+	} else {
+		return nil, fmt.Errorf("secure OTLP connection not implemented")
+	}
+
+	exporter, err := otlploggrpc.New(ctx, grpcExpOpt...)
 	if err != nil {
 		return nil, err
 	}
