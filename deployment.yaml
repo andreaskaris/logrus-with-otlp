@@ -1,0 +1,28 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  creationTimestamp: null
+  labels:
+    app: logrus-with-otlp
+  name: logrus-with-otlp
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: logrus-with-otlp
+  strategy: {}
+  template:
+    metadata:
+      labels:
+        app: logrus-with-otlp
+    spec:
+      containers:
+      - command:
+        - /usr/local/bin/logrus-with-otlp
+        image: quay.io/akaris/logrus-with-otlp:latest
+        name: logrus-with-otlp
+      env:
+      - name: OTEL_SERVICE_NAME
+        value: "logrus-with-otlp"
+      - name: OTEL_EXPORTER_OTLP_ENDPOINT
+        value: "http://otel-collector.openshift-logging.svc.cluster.local:4317"
